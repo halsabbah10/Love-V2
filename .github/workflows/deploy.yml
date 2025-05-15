@@ -28,36 +28,16 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          echo "Installing dependencies..."
-          npm ci
-
-      - name: Debug environment
-        run: |
-          echo "Node version: $(node -v)"
-          echo "NPM version: $(npm -v)"
-          echo "Directory listing:"
-          ls -la
-          echo "Next.js config:"
-          cat next.config.js
+        run: npm ci
 
       - name: Create .nojekyll file
         run: touch ./public/.nojekyll
 
       - name: Build with Next.js
-        run: |
-          echo "Starting build process..."
-          export NODE_OPTIONS="--max_old_space_size=4096"
-          npm run build
+        run: npm run build
         
-      - name: Check build output
-        run: |
-          echo "Build output:"
-          ls -la out || echo "No 'out' directory found!"
-
       - name: Upload artifact
-        if: success()
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4  # CHANGED FROM v3 TO v4
         with:
           path: ./out
 
@@ -70,4 +50,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4  # CHANGED FROM v3 TO v4
