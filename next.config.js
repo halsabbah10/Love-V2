@@ -1,5 +1,6 @@
 const nextConfig = {
   output: 'export',
+  basePath: '/Love-V2', // Your repo name
   eslint: {
     ignoreDuringBuilds: true,
   },
