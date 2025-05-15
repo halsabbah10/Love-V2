@@ -28,12 +28,35 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          echo "Installing dependencies..."
+          npm ci
+
+      - name: Debug environment
+        run: |
+          echo "Node version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          echo "Directory listing:"
+          ls -la
+          echo "Next.js config:"
+          cat next.config.js
+
+      - name: Create .nojekyll file
+        run: touch ./public/.nojekyll
 
       - name: Build with Next.js
-        run: npm run build
+        run: |
+          echo "Starting build process..."
+          export NODE_OPTIONS="--max_old_space_size=4096"
+          npm run build
+        
+      - name: Check build output
+        run: |
+          echo "Build output:"
+          ls -la out || echo "No 'out' directory found!"
 
       - name: Upload artifact
+        if: success()
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
