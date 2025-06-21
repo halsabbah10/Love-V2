@@ -274,6 +274,10 @@ i18n
       order: ["localStorage", "navigator", "htmlTag"],
       caches: ["localStorage"],
     },
+
+    // Add these options for better reliability
+    returnEmptyString: false,
+    returnNull: false,
   });
 
 export default i18n;

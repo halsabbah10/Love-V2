@@ -5,27 +5,46 @@ import { useTranslation } from "react-i18next";
 import i18n from "@/lib/i18n";
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [isInitialized, setIsInitialized] = useState(false);
-  const { i18n: i18nInstance } = useTranslation();
+  const [isReady, setIsReady] = useState(false);
+  const { ready } = useTranslation();
 
   useEffect(() => {
-    const initI18n = async () => {
-      try {
-        if (!i18n.isInitialized) {
-          await i18n.init();
+    // Simple check - if i18n is ready and has loaded resources
+    if (
+      ready &&
+      (i18n.hasResourceBundle("en", "translation") ||
+        i18n.hasResourceBundle("ar", "translation"))
+    ) {
+      setIsReady(true);
+    } else {
+      // Fallback timeout to prevent infinite loading
+      const timer = setTimeout(() => {
+        console.warn("i18n loading timeout, forcing render");
+        setIsReady(true);
+      }, 2000);
+
+      // Check periodically for i18n readiness
+      const interval = setInterval(() => {
+        if (
+          ready &&
+          (i18n.hasResourceBundle("en", "translation") ||
+            i18n.hasResourceBundle("ar", "translation"))
+        ) {
+          setIsReady(true);
+          clearInterval(interval);
+          clearTimeout(timer);
         }
-        setIsInitialized(true);
-      } catch (error) {
-        console.error("i18n initialization failed:", error);
-        setIsInitialized(true); // Still render, but with potential fallbacks
-      }
-    };
+      }, 100);
 
-    initI18n();
-  }, []);
+      return () => {
+        clearTimeout(timer);
+        clearInterval(interval);
+      };
+    }
+  }, [ready]);
 
   useEffect(() => {
-    if (!isInitialized) return;
+    if (!isReady) return;
 
     const handleLanguageChange = (language: string) => {
       // Update document direction and language
@@ -38,18 +57,18 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     };
 
     // Set initial language
-    handleLanguageChange(i18nInstance.language || "en");
+    handleLanguageChange(i18n.language || "en");
 
     // Listen for language changes
-    i18nInstance.on("languageChanged", handleLanguageChange);
+    i18n.on("languageChanged", handleLanguageChange);
 
     return () => {
-      i18nInstance.off("languageChanged", handleLanguageChange);
+      i18n.off("languageChanged", handleLanguageChange);
     };
-  }, [i18nInstance, isInitialized]);
+  }, [isReady]);
 
-  // Show loading state until i18n is initialized
-  if (!isInitialized) {
+  // Show loading state until i18n is ready
+  if (!isReady) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-foreground font-pixel">Loading...</div>
