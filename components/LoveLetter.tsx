@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Heart } from "lucide-react";
 import { AudioContext } from "./AudioController";
 import { usePersonalization } from "@/contexts/personalization";
+import { useTranslation } from "react-i18next";
 
 interface LoveLetterProps {
   isOpen: boolean;
@@ -15,25 +16,9 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ isOpen, onClose }) => {
   const [typingIndex, setTypingIndex] = useState(0);
   const { playSound } = useContext(AudioContext);
   const { insideJoke } = usePersonalization();
+  const { t } = useTranslation();
   
-  const loveLetterText = `
-    My Soul's Soul,
-
-    Discovering you feels like unlocking the ultimate secret level—full of wonder, warmth, and infinite replay value.
-
-    When we first met, I couldn't have predicted this amazing adventure we'd start together. Your smile is my power-up, your laugh my favorite sound effect, and your heart the greatest prize I could ever win.
-
-    Remember when you ${insideJoke}? I smile just thinking about it. These little moments make our story unique and special.
-
-    I've created this little digital arcade of memories and promises because I wanted to give you something as unique and special as you are to me. Each section represents a piece of what makes us "us"—our past moments, our inside jokes, and all the exciting levels we have yet to explore together.
-
-    Every day with you feels like hitting the high score in life. I can't wait to see what bonus rounds are in store for us.
-
-    Ready for our next adventure?
-
-    With all my heart,
-    Husam
-  `;
+  const loveLetterText = t('letterContent');
 
   useEffect(() => {
     if (isOpen && typingIndex < loveLetterText.length) {
@@ -82,7 +67,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ isOpen, onClose }) => {
             
             <div className="mb-6 text-center">
               <Heart className="inline-block w-6 h-6 text-primary animate-pulse-slow" />
-              <h2 className="text-2xl font-pixel neon-text mt-2">Secret Love Letter</h2>
+              <h2 className="text-2xl font-pixel neon-text mt-2">{t('loveLetter')}</h2>
             </div>
             
             <div className="font-script text-lg text-foreground whitespace-pre-line leading-relaxed">
@@ -102,7 +87,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ isOpen, onClose }) => {
                   className="font-pixel bg-primary text-primary-foreground py-2 px-6 rounded-md inline-flex items-center gap-2 interactive-element"
                 >
                   <Heart className="w-4 h-4" />
-                  <span>Close Letter</span>
+                  <span>{t('close')}</span>
                 </button>
               </motion.div>
             )}

@@ -3,18 +3,20 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <motion.button
       onClick={() => setTheme(theme === "dark" ? "pastel" : "dark")}
-      className="fixed top-4 left-4 z-50 w-12 h-12 bg-card/80 backdrop-blur-lg rounded-full flex items-center justify-center shadow-lg border border-primary/20 hover:border-primary/40"
+      className="fixed top-4 left-20 z-50 w-12 h-12 bg-card/80 backdrop-blur-lg rounded-full flex items-center justify-center shadow-lg border border-primary/20 hover:border-primary/40 sm:left-16"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      aria-label="Toggle theme"
+      aria-label={theme === "dark" ? t('lightTheme') : t('darkTheme')}
     >
       <AnimatePresence mode="wait">
         <motion.div

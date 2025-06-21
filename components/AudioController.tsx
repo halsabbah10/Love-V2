@@ -41,7 +41,8 @@ export const AudioController = () => {
     });
 
     return () => {
-      // Cleanup
+      // Cleanup - using current refs at cleanup time is acceptable here
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       Object.values(audioRefs.current).forEach((audio) => {
         if (audio) {
           audio.pause();

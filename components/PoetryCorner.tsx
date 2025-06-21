@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Heart, Star } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Poetry {
   id: string;
@@ -13,8 +14,8 @@ interface Poetry {
 
 const poems: Poetry[] = [
   {
-    id: "merah-1",
-    author: "ميره",
+    id: "houry-1",
+    author: "حوري",
     content: `النهاية؟ أم أنها بداية كل شيء؟
 بكفيني، في عتمة الطريق، أن أرى طيفك يلاحقني.
 أتعلم يا ألطف من عرفت؟ ويا أحنَّ من قابلت؟
@@ -28,8 +29,8 @@ const poems: Poetry[] = [
 ها أنا أعود مجددًا لملجئي الوحيد، ومهربي الأقرب الكتابة.`
   },
   {
-    id: "merah-2",
-    author: "ميره",
+    id: "houry-2",
+    author: "حوري",
     content: `ولأنني أعود محمّلة بثِقل الأيام، ولا أجد ملجأً لضجيج قلبي سوى الكتابة، سأكتب… سأكتب شعوري فقط.
 
 كنتُ ولا زلتَ أعظم صُدف أيامي… فارس قلبي، وأكثر الرجال هيبةً في عيني.
@@ -44,7 +45,7 @@ const poems: Poetry[] = [
   {
     id: "husam-1",
     author: "حسام",
-    content: `يا ميره…
+    content: `يا حوري…
 ما كتبته ليس رسالة، بل سُقيا روح، ورعشة شوق، ونبض امرأةٍ خُلقت لي.
 أنا لا أبحث عن الجمال، لأنه اختاركِ واكتفى…
 ولا أطلب العشق، لأنكِ وحدكِ جعلتِه دينًا من اللذة لا يُكفَر به.
@@ -62,7 +63,7 @@ const poems: Poetry[] = [
 وشفاهكِ… وعدٌ بحياةٍ لا تشبه سواكِ.
 
 أحبكِ، لا بعقل الرجال… بل بجنون من عرفكِ، ولم يرد النجاة بعدها.
-يا ميره، أنتِ أنثى لا تُكرّر، وامرأةٌ تُكتبُ فيها القصائد وتضيع بعدها اللغة.
+يا حوري، أنتِ أنثى لا تُكرّر، وامرأةٌ تُكتبُ فيها القصائد وتضيع بعدها اللغة.
 
 قولي ما شئتِ… لكن اعلمي أني رجل لا يُجيد التمثيل،
 وما قلته الآن؟
@@ -72,6 +73,7 @@ const poems: Poetry[] = [
 ];
 
 export const PoetryCorner = () => {
+  const { t } = useTranslation();
   const [selectedPoem, setSelectedPoem] = useState<Poetry | null>(null);
   const [isArabic, setIsArabic] = useState(true);
 
@@ -80,7 +82,7 @@ export const PoetryCorner = () => {
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h2 className="title-large text-primary">
-            {isArabic ? "ركن الشعر" : "Poetry Corner"}
+            {t('poetryCorner')}
           </h2>
           <button
             onClick={() => setIsArabic(!isArabic)}

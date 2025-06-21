@@ -3,16 +3,18 @@
 import { motion } from 'framer-motion';
 import { Heart, Star, MessageSquare, Gamepad, Music2 } from 'lucide-react';
 import { usePersonalization } from '@/contexts/personalization';
+import { useTranslation } from 'react-i18next';
 
 export const BottomNav = () => {
   const { emoji } = usePersonalization();
+  const { t } = useTranslation();
   
   const navItems = [
-    { icon: <Heart className="w-6 h-6" />, label: 'Love' },
-    { icon: <Star className="w-6 h-6" />, label: 'Future' },
-    { icon: <MessageSquare className="w-6 h-6" />, label: 'Notes' },
-    { icon: <Gamepad className="w-6 h-6" />, label: 'Game' },
-    { icon: <Music2 className="w-6 h-6" />, label: 'Music' },
+    { icon: <Heart className="w-6 h-6" />, label: t('loveGenerator') },
+    { icon: <Star className="w-6 h-6" />, label: t('achievements') },
+    { icon: <MessageSquare className="w-6 h-6" />, label: t('guestbook') },
+    { icon: <Gamepad className="w-6 h-6" />, label: t('arcade') },
+    { icon: <Music2 className="w-6 h-6" />, label: t('poetry') },
   ];
 
   return (

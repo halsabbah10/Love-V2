@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Heart, Star, Music, Flower } from "lucide-react";
 import { useTripleClick } from "@/hooks/useTripleClick";
 import { useSounds } from "@/components/SoundManager";
+import { useTranslation } from "react-i18next";
+import "@/lib/i18n";
 
 // Lazy load components
 const ArcadeLobby = lazy(() => import("@/components/ArcadeLobby").then(mod => ({ default: mod.ArcadeLobby })));
@@ -36,6 +38,7 @@ export default function Home() {
   const [showLoveLetter, setShowLoveLetter] = useState(false);
   const footerRef = useRef<HTMLDivElement>(null);
   const { playBackgroundMusic } = useSounds();
+  const { t } = useTranslation();
 
   useTripleClick({
     element: footerRef.current,
@@ -128,7 +131,7 @@ export default function Home() {
               <div className="inline-flex items-center gap-2 cursor-pointer">
                 <div className="pixel-heart w-3 h-3 animate-pulse-slow"></div>
                 <span className="text-xs text-muted-foreground font-pixel">
-                  Built with love for Merah
+                  {t('dearBeloved')}
                 </span>
                 <div className="pixel-heart w-3 h-3 animate-pulse-slow"></div>
               </div>

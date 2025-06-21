@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, SendHorizontal } from "lucide-react";
 import { AudioContext } from "./AudioController";
 import { usePersonalization } from "@/contexts/personalization";
+import { useTranslation } from "react-i18next";
 
 interface GuestMessage {
   id: number;
@@ -21,6 +22,7 @@ const colors = [
 ];
 
 export const Guestbook = () => {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<GuestMessage[]>([]);
@@ -55,7 +57,7 @@ export const Guestbook = () => {
     <div className="w-full py-16 px-4">
       <div className="max-w-2xl mx-auto relative">
         <h2 className="text-3xl md:text-4xl font-pixel text-center mb-4 text-shadow-glow text-primary">
-          Love Notes for My Heart
+          {t('guestbook')}
         </h2>
         
         <div className="text-center mb-8">

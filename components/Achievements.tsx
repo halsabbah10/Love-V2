@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, Heart, Star, Sparkles } from 'lucide-react';
 import { useSounds } from "@/components/SoundManager";
+import { useTranslation } from 'react-i18next';
 
 interface Achievement {
   id: string;
@@ -12,32 +13,33 @@ interface Achievement {
 }
 
 export const Achievements = () => {
+  const { t } = useTranslation();
   const [achievements, setAchievements] = useState<Achievement[]>([
     {
       id: 'first-message',
-      title: 'Love Messenger',
-      description: 'Send your first message in the guestbook',
+      title: t('achievementsList.guestbook'),
+      description: t('achievementsList.guestbookDesc'),
       icon: <Heart className="w-6 h-6" />,
       unlocked: false
     },
     {
       id: 'heart-collector',
-      title: 'Heart Collector',
-      description: 'Score 10 points in the mini-game',
+      title: t('achievementsList.miniGame'),
+      description: t('achievementsList.miniGameDesc'),
       icon: <Trophy className="w-6 h-6" />,
       unlocked: false
     },
     {
       id: 'secret-finder',
-      title: 'Secret Finder',
-      description: 'Discover the hidden love letter',
+      title: t('achievementsList.secretLetter'),
+      description: t('achievementsList.secretLetterDesc'),
       icon: <Sparkles className="w-6 h-6" />,
       unlocked: false
     },
     {
       id: 'love-expert',
-      title: 'Love Expert',
-      description: 'Generate 5 love messages',
+      title: t('achievementsList.loveGenerator'),
+      description: t('achievementsList.loveGeneratorDesc'),
       icon: <Star className="w-6 h-6" />,
       unlocked: false
     }
@@ -67,7 +69,7 @@ export const Achievements = () => {
   return (
     <div className="w-full py-16 px-4">
       <h2 className="title-large text-center mb-8 text-primary">
-        Love Achievements
+        {t('achievements')}
       </h2>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">

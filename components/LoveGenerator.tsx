@@ -6,6 +6,7 @@ import { Heart } from "lucide-react";
 import confetti from "canvas-confetti";
 import { AudioContext } from "./AudioController";
 import { usePersonalization } from "@/contexts/personalization";
+import { useTranslation } from "react-i18next";
 
 // Enhanced love messages with AI-generated content
 const loveMessages = [
@@ -46,17 +47,20 @@ export const LoveGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const { playSound } = useContext(AudioContext);
   const { favoriteFlower } = usePersonalization();
+  const { t } = useTranslation();
   
   const generateMessage = () => {
     setIsGenerating(true);
     playSound("click");
     
-    let newMessage: string;
+    // Get random love message from translations
+    const messageKeys = ['1', '2', '3', '4', '5'];
+    let randomKey: string;
     do {
-      newMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
-    } while (newMessage === message && loveMessages.length > 1);
+      randomKey = messageKeys[Math.floor(Math.random() * messageKeys.length)];
+    } while (t(`loveMessages.${randomKey}`) === message && messageKeys.length > 1);
 
-    newMessage = newMessage.replace("{{flower}}", favoriteFlower);
+    const newMessage = t(`loveMessages.${randomKey}`);
     
     setTimeout(() => {
       setMessage(newMessage);
@@ -75,7 +79,7 @@ export const LoveGenerator = () => {
   return (
     <div className="w-full py-16 flex flex-col items-center justify-center px-4">
       <h2 className="text-3xl md:text-4xl font-pixel text-center mb-8 text-shadow-glow text-primary">
-        Random Love Generator
+        {t('loveGenerator')}
       </h2>
       
       <motion.div
@@ -124,11 +128,11 @@ export const LoveGenerator = () => {
             >
               {message ? (
                 <p className="font-script text-2xl text-foreground">
-                  "{message}"
+                  &ldquo;{message}&rdquo;
                 </p>
               ) : (
                 <p className="text-muted-foreground font-pixel">
-                  Hit the button for a love boost!
+                  {t('generateLove')}!
                 </p>
               )}
             </motion.div>
@@ -144,7 +148,7 @@ export const LoveGenerator = () => {
         whileTap={{ scale: 0.95 }}
       >
         <Heart className="w-5 h-5" />
-        <span>Gimme a Love Boost!</span>
+        <span>{t('generateLove')}</span>
       </motion.button>
     </div>
   );

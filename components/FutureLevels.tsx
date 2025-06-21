@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { TowerControl as GameController, Heart, Calendar, Sparkles } from "lucide-react";
 import { AudioContext } from "./AudioController";
 import { usePersonalization } from "@/contexts/personalization";
+import { useTranslation } from "react-i18next";
 
 export const FutureLevels = () => {
+  const { t } = useTranslation();
   const { playSound } = useContext(AudioContext);
   const { dreamDateIdea, nickname } = usePersonalization();
   

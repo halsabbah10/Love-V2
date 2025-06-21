@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trophy, Heart } from "lucide-react";
 import { AudioContext } from "./AudioController";
+import { useTranslation } from "react-i18next";
 
 interface Heart {
   id: number;
@@ -33,6 +34,7 @@ const compliments = [
 ];
 
 export const MiniGame = () => {
+  const { t } = useTranslation();
   const [gameActive, setGameActive] = useState(false);
   const [playerX, setPlayerX] = useState(50);
   const [hearts, setHearts] = useState<Heart[]>([]);
@@ -293,7 +295,7 @@ export const MiniGame = () => {
             </AnimatePresence>
             
             <div className="absolute top-2 left-2 bg-card/80 backdrop-blur-sm py-1 px-3 rounded-full font-pixel text-sm">
-              Score: {score}
+              {t('score')}: {score}
             </div>
             
             <div className="absolute bottom-2 right-2 text-xs text-muted-foreground font-pixel">
@@ -313,7 +315,7 @@ export const MiniGame = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Start Game
+              {t('startGame')}
             </motion.button>
             
             <p className="mt-6 text-center text-sm text-muted-foreground max-w-xs px-4">

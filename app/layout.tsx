@@ -4,12 +4,14 @@ import { pixelFont, scriptFont, arabicFont } from "./fonts";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { PersonalizationProvider } from "@/components/PersonalizationProvider";
 import { ThemeToggleWrapper } from "@/components/ThemeToggleWrapper";
-import { SoundProvider } from "@/components/SoundManager"; // Add this import
-import { SoundToggle } from "@/components/SoundToggle"; // Add this import
+import { SoundProvider } from "@/components/SoundManager";
+import { SoundToggle } from "@/components/SoundToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { I18nProvider } from "@/components/I18nProvider";
 
 export const metadata: Metadata = {
   title: "Heartbeats",
-  description: "A special journey of love and memories for Merah",
+  description: "A special journey of love and memories for Houry",
   keywords: ["love", "romance", "memories", "UAE University", "biochemistry", "Palestine"],
 };
 
@@ -39,16 +41,19 @@ export default function RootLayout({
           attribute="data-theme"
           defaultTheme="dark"
           enableSystem={false}
-          storageKey="merah-theme"
+          storageKey="houry-theme"
           themes={["dark", "pastel"]}
         >
-          <PersonalizationProvider>
-            <SoundProvider>
-              <ThemeToggleWrapper />
-              <SoundToggle />
-              {children}
-            </SoundProvider>
-          </PersonalizationProvider>
+          <I18nProvider>
+            <PersonalizationProvider>
+              <SoundProvider>
+                <LanguageToggle />
+                <ThemeToggleWrapper />
+                <SoundToggle />
+                {children}
+              </SoundProvider>
+            </PersonalizationProvider>
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>
