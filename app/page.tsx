@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, Suspense, lazy } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Heart, Star, Music, Flower } from "lucide-react";
 import { useTripleClick } from "@/hooks/useTripleClick";
@@ -8,63 +8,18 @@ import { useSounds } from "@/components/SoundManager";
 import { useTranslation } from "react-i18next";
 import "@/lib/i18n";
 
-// Lazy load components
-const ArcadeLobby = lazy(() =>
-  import("@/components/ArcadeLobby").then((mod) => ({
-    default: mod.ArcadeLobby,
-  }))
-);
-const FutureLevels = lazy(() =>
-  import("@/components/FutureLevels").then((mod) => ({
-    default: mod.FutureLevels,
-  }))
-);
-const LoveGenerator = lazy(() =>
-  import("@/components/LoveGenerator").then((mod) => ({
-    default: mod.LoveGenerator,
-  }))
-);
-const HeartShower = lazy(() =>
-  import("@/components/HeartShower").then((mod) => ({
-    default: mod.HeartShower,
-  }))
-);
-const Guestbook = lazy(() =>
-  import("@/components/Guestbook").then((mod) => ({ default: mod.Guestbook }))
-);
-const MiniGame = lazy(() =>
-  import("@/components/MiniGame").then((mod) => ({ default: mod.MiniGame }))
-);
-const LoveLetter = lazy(() =>
-  import("@/components/LoveLetter").then((mod) => ({ default: mod.LoveLetter }))
-);
-const LovePoints = lazy(() =>
-  import("@/components/LovePoints").then((mod) => ({ default: mod.LovePoints }))
-);
-const Achievements = lazy(() =>
-  import("@/components/Achievements").then((mod) => ({
-    default: mod.Achievements,
-  }))
-);
-const PoetryCorner = lazy(() =>
-  import("@/components/PoetryCorner").then((mod) => ({
-    default: mod.PoetryCorner,
-  }))
-);
-const BottomNav = lazy(() =>
-  import("@/components/BottomNav").then((mod) => ({ default: mod.BottomNav }))
-);
-
-const LoadingFallback = () => {
-  const { t } = useTranslation();
-  return (
-    <div className="min-h-[200px] flex items-center justify-center">
-      <div className="animate-pulse text-primary font-pixel">
-        {t("loading")}
-      </div>
-    </div>
-  );
-};
+// Direct imports instead of lazy loading to fix loading issues
+import { ArcadeLobby } from "@/components/ArcadeLobby";
+import { FutureLevels } from "@/components/FutureLevels";
+import { LoveGenerator } from "@/components/LoveGenerator";
+import { HeartShower } from "@/components/HeartShower";
+import { Guestbook } from "@/components/Guestbook";
+import { MiniGame } from "@/components/MiniGame";
+import { LoveLetter } from "@/components/LoveLetter";
+import { LovePoints } from "@/components/LovePoints";
+import { Achievements } from "@/components/Achievements";
+import { PoetryCorner } from "@/components/PoetryCorner";
+import { BottomNav } from "@/components/BottomNav";
 
 const pageTransitionVariants = {
   initial: { opacity: 0, y: 20 },
@@ -125,42 +80,22 @@ export default function Home() {
         <div className="vhs-tracking"></div>
 
         {/* Love Points System */}
-        <Suspense fallback={<LoadingFallback />}>
-          <LovePoints />
-        </Suspense>
+        <LovePoints />
 
         {/* Bottom Navigation for Mobile */}
-        <Suspense fallback={null}>
-          <BottomNav />
-        </Suspense>
+        <BottomNav />
 
         {showIntro ? (
-          <Suspense fallback={<LoadingFallback />}>
-            <ArcadeLobby onStart={() => setShowIntro(false)} />
-          </Suspense>
+          <ArcadeLobby onStart={() => setShowIntro(false)} />
         ) : (
           <div className="content-container">
-            <Suspense fallback={<LoadingFallback />}>
-              <FutureLevels />
-            </Suspense>
-            <Suspense fallback={<LoadingFallback />}>
-              <PoetryCorner />
-            </Suspense>
-            <Suspense fallback={<LoadingFallback />}>
-              <LoveGenerator />
-            </Suspense>
-            <Suspense fallback={<LoadingFallback />}>
-              <HeartShower />
-            </Suspense>
-            <Suspense fallback={<LoadingFallback />}>
-              <Guestbook />
-            </Suspense>
-            <Suspense fallback={<LoadingFallback />}>
-              <MiniGame />
-            </Suspense>
-            <Suspense fallback={<LoadingFallback />}>
-              <Achievements />
-            </Suspense>
+            <FutureLevels />
+            <PoetryCorner />
+            <LoveGenerator />
+            <HeartShower />
+            <Guestbook />
+            <MiniGame />
+            <Achievements />
 
             {/* Footer with easter egg */}
             <div ref={footerRef} className="mt-20 text-center py-8 relative">
@@ -180,12 +115,10 @@ export default function Home() {
         )}
 
         {/* Secret love letter modal */}
-        <Suspense fallback={null}>
-          <LoveLetter
-            isOpen={showLoveLetter}
-            onClose={() => setShowLoveLetter(false)}
-          />
-        </Suspense>
+        <LoveLetter
+          isOpen={showLoveLetter}
+          onClose={() => setShowLoveLetter(false)}
+        />
       </motion.main>
     </AnimatePresence>
   );

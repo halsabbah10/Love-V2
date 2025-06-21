@@ -258,26 +258,30 @@ const resources = {
   },
 };
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    resources,
-    fallbackLng: "en",
-    debug: false,
+const i18nInstance = i18n.use(LanguageDetector).use(initReactI18next);
 
-    interpolation: {
-      escapeValue: false,
-    },
+// Initialize synchronously
+i18nInstance.init({
+  resources,
+  fallbackLng: "en",
+  lng: "en", // Set default language
+  debug: false,
 
-    detection: {
-      order: ["localStorage", "navigator", "htmlTag"],
-      caches: ["localStorage"],
-    },
+  interpolation: {
+    escapeValue: false,
+  },
 
-    // Add these options for better reliability
-    returnEmptyString: false,
-    returnNull: false,
-  });
+  detection: {
+    order: ["localStorage", "navigator", "htmlTag"],
+    caches: ["localStorage"],
+  },
 
-export default i18n;
+  // Ensure synchronous loading
+  initImmediate: false,
+
+  // Add these options for better reliability
+  returnEmptyString: false,
+  returnNull: false,
+});
+
+export default i18nInstance;

@@ -1,51 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 import i18n from "@/lib/i18n";
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [isReady, setIsReady] = useState(false);
-  const { ready } = useTranslation();
-
   useEffect(() => {
-    // Simple check - if i18n is ready and has loaded resources
-    if (
-      ready &&
-      (i18n.hasResourceBundle("en", "translation") ||
-        i18n.hasResourceBundle("ar", "translation"))
-    ) {
-      setIsReady(true);
-    } else {
-      // Fallback timeout to prevent infinite loading
-      const timer = setTimeout(() => {
-        console.warn("i18n loading timeout, forcing render");
-        setIsReady(true);
-      }, 2000);
-
-      // Check periodically for i18n readiness
-      const interval = setInterval(() => {
-        if (
-          ready &&
-          (i18n.hasResourceBundle("en", "translation") ||
-            i18n.hasResourceBundle("ar", "translation"))
-        ) {
-          setIsReady(true);
-          clearInterval(interval);
-          clearTimeout(timer);
-        }
-      }, 100);
-
-      return () => {
-        clearTimeout(timer);
-        clearInterval(interval);
-      };
-    }
-  }, [ready]);
-
-  useEffect(() => {
-    if (!isReady) return;
-
     const handleLanguageChange = (language: string) => {
       // Update document direction and language
       document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
@@ -56,7 +15,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.add(`lang-${language}`);
     };
 
-    // Set initial language
+    // Set initial language immediately
     handleLanguageChange(i18n.language || "en");
 
     // Listen for language changes
@@ -65,16 +24,8 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     return () => {
       i18n.off("languageChanged", handleLanguageChange);
     };
-  }, [isReady]);
+  }, []);
 
-  // Show loading state until i18n is ready
-  if (!isReady) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-foreground font-pixel">Loading...</div>
-      </div>
-    );
-  }
-
+  // Always render children immediately - no loading state
   return <>{children}</>;
 }
