@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Star, Trophy } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Heart, Star, Trophy } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const LovePoints = () => {
   const { t } = useTranslation();
@@ -11,7 +11,7 @@ export const LovePoints = () => {
 
   useEffect(() => {
     // Load points from localStorage
-    const savedPoints = localStorage.getItem('lovePoints');
+    const savedPoints = localStorage.getItem("lovePoints");
     if (savedPoints) {
       setPoints(parseInt(savedPoints));
     }
@@ -25,26 +25,20 @@ export const LovePoints = () => {
       setShowReward(true);
       setTimeout(() => setShowReward(false), 3000);
     }
-    localStorage.setItem('lovePoints', points.toString());
+    localStorage.setItem("lovePoints", points.toString());
   }, [points, level]);
 
   return (
     <div className="fixed top-4 right-20 z-50 sm:right-4">
       <div className="bg-card rounded-full px-4 py-2 flex items-center gap-2 shadow-lg">
-        <motion.div
-          className="flex items-center"
-          whileHover={{ scale: 1.1 }}
-        >
+        <motion.div className="flex items-center" whileHover={{ scale: 1.1 }}>
           <Heart className="w-4 h-4 text-primary" />
           <span className="ml-2 font-pixel text-sm">{points}</span>
         </motion.div>
-        
+
         <div className="w-px h-4 bg-border"></div>
-        
-        <motion.div
-          className="flex items-center"
-          whileHover={{ scale: 1.1 }}
-        >
+
+        <motion.div className="flex items-center" whileHover={{ scale: 1.1 }}>
           <Trophy className="w-4 h-4 text-accent" />
           <span className="ml-2 font-pixel text-sm">Lvl {level}</span>
         </motion.div>
@@ -59,7 +53,7 @@ export const LovePoints = () => {
             className="absolute top-full mt-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-2 rounded-full font-pixel text-sm flex items-center gap-2"
           >
             <Star className="w-4 h-4" />
-            Level Up!
+            {t("levelUp")}
           </motion.div>
         )}
       </AnimatePresence>

@@ -74,27 +74,36 @@ export const ArcadeLobby: React.FC<ArcadeLobbyProps> = ({ onStart }) => {
       >
         <div className="relative">
           <Sparkles className="absolute -top-8 -left-8 text-accent w-8 h-8 animate-pulse-slow" />
-          <Sparkles className="absolute -top-8 -right-8 text-secondary w-8 h-8 animate-pulse-slow" style={{ animationDelay: "0.5s" }} />
-          
-          <h1 className="text-4xl md:text-6xl font-pixel font-bold text-gradient animate-pulse-slow">
-            {t('welcome')}
+          <Sparkles
+            className="absolute -top-8 -right-8 text-secondary w-8 h-8 animate-pulse-slow"
+            style={{ animationDelay: "0.5s" }}
+          />
+
+          <h1 className="text-4xl md:text-6xl font-pixel font-bold text-gradient animate-pulse-slow translation-container">
+            {t("welcome")}
           </h1>
-          
-          <h2 className="text-3xl md:text-5xl font-pixel font-bold text-primary mt-4">
-            {t('subtitle')}
+
+          <h2 className="text-3xl md:text-5xl font-pixel font-bold text-primary mt-4 translation-container">
+            {t("subtitle")}
           </h2>
-          
-          <div className="mt-4 font-pixel text-xl text-accent animate-blink">
-            ★ {t('description')} ★
+
+          <div className="mt-4 font-pixel text-xl text-accent animate-blink translation-container">
+            ★ {t("description")} ★
           </div>
-          
-          <Sparkles className="absolute -bottom-8 -left-8 text-primary w-8 h-8 animate-pulse-slow" style={{ animationDelay: "1s" }} />
-          <Sparkles className="absolute -bottom-8 -right-8 text-accent w-8 h-8 animate-pulse-slow" style={{ animationDelay: "1.5s" }} />
+
+          <Sparkles
+            className="absolute -bottom-8 -left-8 text-primary w-8 h-8 animate-pulse-slow"
+            style={{ animationDelay: "1s" }}
+          />
+          <Sparkles
+            className="absolute -bottom-8 -right-8 text-accent w-8 h-8 animate-pulse-slow"
+            style={{ animationDelay: "1.5s" }}
+          />
         </div>
 
         <motion.button
           onClick={handleStart}
-          className="font-pixel text-2xl bg-primary text-primary-foreground py-3 px-8 rounded-md shadow-lg neon-glow"
+          className="font-pixel text-2xl bg-primary text-primary-foreground py-3 px-8 rounded-md shadow-lg neon-glow translation-container"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           animate={{
@@ -106,11 +115,11 @@ export const ArcadeLobby: React.FC<ArcadeLobbyProps> = ({ onStart }) => {
             repeatType: "reverse",
           }}
         >
-          {t('enterButton')} ♥
+          {t("enterButton")} ♥
         </motion.button>
 
-        <div className="text-muted-foreground font-pixel text-sm animate-blink">
-          INSERT COIN TO PLAY
+        <div className="text-muted-foreground font-pixel text-sm animate-blink translation-container">
+          {t("insertCoin")}
         </div>
       </motion.div>
     </motion.div>

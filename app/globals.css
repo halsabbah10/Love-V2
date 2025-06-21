@@ -529,40 +529,38 @@
     }
   }
 
-  /* RTL Support for Arabic */
-  [dir="rtl"] {
-    .fixed.top-4.left-4 {
-      left: auto;
-      right: 1rem;
-    }
+  /* RTL Support for Arabic - Fixed nested CSS */
+  [dir="rtl"] .fixed.top-4.left-4 {
+    left: auto;
+    right: 1rem;
+  }
 
-    .fixed.top-4.right-4 {
-      right: auto;
-      left: 1rem;
-    }
+  [dir="rtl"] .fixed.top-4.right-4 {
+    right: auto;
+    left: 1rem;
+  }
 
-    .fixed.bottom-4.right-4 {
-      right: auto;
-      left: 1rem;
-    }
+  [dir="rtl"] .fixed.bottom-4.right-4 {
+    right: auto;
+    left: 1rem;
+  }
 
-    .ml-auto {
-      margin-left: auto;
-      margin-right: 0;
-    }
+  [dir="rtl"] .ml-auto {
+    margin-left: auto;
+    margin-right: 0;
+  }
 
-    .mr-2 {
-      margin-right: 0;
-      margin-left: 0.5rem;
-    }
+  [dir="rtl"] .mr-2 {
+    margin-right: 0;
+    margin-left: 0.5rem;
+  }
 
-    .text-left {
-      text-align: right;
-    }
+  [dir="rtl"] .text-left {
+    text-align: right;
+  }
 
-    .text-right {
-      text-align: left;
-    }
+  [dir="rtl"] .text-right {
+    text-align: left;
   }
 
   /* Arabic font styling */
@@ -601,7 +599,6 @@
     margin-right: 1rem;
     margin-left: 0;
   }
-}
 
 * {
   @apply transition-colors duration-200;
@@ -739,6 +736,11 @@ body {
   margin-left: 0.5rem;
 }
 
+[dir="rtl"] .ml-1 {
+  margin-left: 0;
+  margin-right: 0.25rem;
+}
+
 [dir="rtl"] .ml-2 {
   margin-left: 0;
   margin-right: 0.5rem;
@@ -802,4 +804,25 @@ body {
 [dir="rtl"] .whitespace-pre-line {
   text-align: right;
   direction: rtl;
+}
+
+/* Ensure consistent layout during language changes */
+.layout-stable {
+  transition: none !important;
+}
+
+.layout-stable * {
+  transition: none !important;
+}
+
+/* Fixed width containers to prevent layout shifts */
+.language-stable {
+  min-width: fit-content;
+}
+
+/* Prevent content jumping during translations */
+.translation-container {
+  min-height: 1.5rem;
+  display: flex;
+  align-items: center;
 }

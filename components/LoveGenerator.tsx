@@ -48,30 +48,33 @@ export const LoveGenerator = () => {
   const { playSound } = useContext(AudioContext);
   const { favoriteFlower } = usePersonalization();
   const { t } = useTranslation();
-  
+
   const generateMessage = () => {
     setIsGenerating(true);
     playSound("click");
-    
+
     // Get random love message from translations
-    const messageKeys = ['1', '2', '3', '4', '5'];
+    const messageKeys = ["1", "2", "3", "4", "5"];
     let randomKey: string;
     do {
       randomKey = messageKeys[Math.floor(Math.random() * messageKeys.length)];
-    } while (t(`loveMessages.${randomKey}`) === message && messageKeys.length > 1);
+    } while (
+      t(`loveMessages.${randomKey}`) === message &&
+      messageKeys.length > 1
+    );
 
     const newMessage = t(`loveMessages.${randomKey}`);
-    
+
     setTimeout(() => {
       setMessage(newMessage);
       setIsGenerating(false);
       playSound("success");
-      
+
       confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#FF9FF3', '#FFDFD3', '#A0F1EA', '#D8B5FF', '#FFF0AA']
+        colors: ["#FF9FF3", "#FFDFD3", "#A0F1EA", "#D8B5FF", "#FFF0AA"],
       });
     }, 1000);
   };
@@ -79,9 +82,9 @@ export const LoveGenerator = () => {
   return (
     <div className="w-full py-16 flex flex-col items-center justify-center px-4">
       <h2 className="text-3xl md:text-4xl font-pixel text-center mb-8 text-shadow-glow text-primary">
-        {t('loveGenerator')}
+        {t("loveGenerator")}
       </h2>
-      
+
       <motion.div
         className="w-full max-w-lg h-48 bg-card rounded-xl p-6 mb-8 flex items-center justify-center text-center relative pixel-border overflow-hidden interactive-element"
         initial={{ opacity: 0 }}
@@ -116,7 +119,9 @@ export const LoveGenerator = () => {
                   />
                 ))}
               </div>
-              <p className="mt-3 font-pixel text-muted-foreground">Generating love...</p>
+              <p className="mt-3 font-pixel text-muted-foreground">
+                {t("generatingLove")}
+              </p>
             </motion.div>
           ) : (
             <motion.div
@@ -132,14 +137,14 @@ export const LoveGenerator = () => {
                 </p>
               ) : (
                 <p className="text-muted-foreground font-pixel">
-                  {t('generateLove')}!
+                  {t("generateLove")}!
                 </p>
               )}
             </motion.div>
           )}
         </AnimatePresence>
       </motion.div>
-      
+
       <motion.button
         onClick={generateMessage}
         disabled={isGenerating}
@@ -148,7 +153,7 @@ export const LoveGenerator = () => {
         whileTap={{ scale: 0.95 }}
       >
         <Heart className="w-5 h-5" />
-        <span>{t('generateLove')}</span>
+        <span>{t("generateLove")}</span>
       </motion.button>
     </div>
   );
