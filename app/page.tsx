@@ -108,7 +108,7 @@ export default function Home() {
               </div>
 
               <div className="mt-2 text-xs text-muted-foreground/50">
-                Discover all secrets to unlock your special surprise!
+                {t("discoverSecrets")}
               </div>
             </div>
           </div>

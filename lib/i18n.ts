@@ -128,6 +128,9 @@ const resources = {
       language: "Language",
       english: "English",
       arabic: "العربية",
+
+      // Footer
+      discoverSecrets: "Discover all secrets to unlock your special surprise!",
     },
   },
   ar: {
@@ -254,34 +257,32 @@ const resources = {
       language: "اللغة",
       english: "English",
       arabic: "العربية",
+
+      // Footer
+      discoverSecrets: "اكتشفي جميع الأسرار لفتح مفاجأتكِ الخاصة!",
     },
   },
 };
 
-const i18nInstance = i18n.use(LanguageDetector).use(initReactI18next);
+// Initialize i18n with language detection
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: "en",
+    debug: false,
+    interpolation: {
+      escapeValue: false,
+    },
+    detection: {
+      order: ["localStorage", "navigator", "htmlTag"],
+      caches: ["localStorage"],
+    },
+    // Ensure synchronous loading for better performance
+    initImmediate: false,
+    returnEmptyString: false,
+    returnNull: false,
+  });
 
-// Initialize synchronously
-i18nInstance.init({
-  resources,
-  fallbackLng: "en",
-  lng: "en", // Set default language
-  debug: false,
-
-  interpolation: {
-    escapeValue: false,
-  },
-
-  detection: {
-    order: ["localStorage", "navigator", "htmlTag"],
-    caches: ["localStorage"],
-  },
-
-  // Ensure synchronous loading
-  initImmediate: false,
-
-  // Add these options for better reliability
-  returnEmptyString: false,
-  returnNull: false,
-});
-
-export default i18nInstance;
+export default i18n;
